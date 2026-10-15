@@ -18,9 +18,20 @@ public class Juego {
     @Column(nullable=false)
     private String titulo;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 1000)
     private String descripcion;
 
     @Column(name="portada_url")
     private String portadaUrl;
+
+    @Column(nullable = false)
+    private Double precio;
+
+    @Column(nullable = false)
+    private String categoria;
+
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
+
 }

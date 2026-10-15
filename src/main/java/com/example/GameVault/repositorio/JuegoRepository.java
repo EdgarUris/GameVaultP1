@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface JuegoRepository extends JpaRepository<Juego, Long> {
 
-    //SELECT * FROM juegos WHERE titulo = :titulo
+    // @Query SELECT * FROM juegos WHERE titulo = :titulo
     List<Juego> findByTituloContainingIgnoreCase(String titulo);
 
 

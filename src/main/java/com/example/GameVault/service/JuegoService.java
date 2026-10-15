@@ -1,5 +1,7 @@
 package com.example.GameVault.service;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import com.example.GameVault.repositorio.JuegoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,8 +27,8 @@ public class JuegoService {
     @Autowired
     private JuegoRepository juegoRepository;
 
-
-
+    @Autowired(required=false)
+    private Cloudinary cloudinary;
 
     private static final String UPLOAD_DIR = "src/main/resources/static/uploads/";
 
@@ -36,6 +38,13 @@ public class JuegoService {
         return juegoRepository.findAll();
     }
 
+    public void eliminarJuego(Long id){
+        juegoRepository.deleteById(id);
+    }
+
+    public Juego buscarPorId(Long id){
+        return juegoRepository.findById(id).orElse(null);
+    }
 
     public void guardarJuego(Juego juego, MultipartFile portada) {
         String urlImagen = "default.png";
@@ -46,7 +55,7 @@ public class JuegoService {
             // urlImagen = guardarImagenLocal(portada);
 
             // OPCIÓN 2: Subida a Cloudinary
-            urlImagen = guardarImagenLocal(portada);
+            urlImagen = guardarImagenCloudinary(portada);
         }
 
 
@@ -90,6 +99,19 @@ public class JuegoService {
             return "default.png";
         }
     }
+    private String guardarImagenCloudinary(MultipartFile portada) {
+        try {
+            // Sube el archivo a Cloudinary
+            Map uploadResult = cloudinary.uploader().upload(portada.getBytes(), ObjectUtils.emptyMap());
+            // Obtiene la URL pública generada por Cloudinary
+            return uploadResult.get("secure_url").toString();
+        } catch (Exception e) {
+            System.err.println("Error al subir a Cloudinary. Revisa tus credenciales.");
+            e.printStackTrace();
+            return "default.png";
+        }
+    }
+
 }
 
 

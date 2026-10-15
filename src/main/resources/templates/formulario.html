@@ -20,6 +20,20 @@
                     <textarea id="descripcion" name="descripcion" rows="4" required class="form-control" style="resize: vertical;"></textarea>
                 </div>
 
+                <div class="form-group">
+                    <label for="precio" class="form-label">Precio</label>
+                    <input type="number" step="0.01" id="precio" name="precio" required class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="categoria" class="form-label">Categoria</label>
+                    <select name="categoria" id="categoria" required class="form-control">
+                        <option value="" selected>Seleccione una categoria</option>
+                        <option value="accion">Acción</option>
+                        <option value="aventura">Aventura</option>
+                    </select>
+                </div>
+
                 <div class="form-group" style="background-color: rgba(0,0,0,0.2); padding: 20px; border-radius: 8px; border: 1px dashed var(--primary);">
                     <label for="portada" class="form-label" style="color: var(--primary);">
                         📸 Subir Portada (Imagen)

@@ -6,6 +6,17 @@
             <a th:href="@{/juegos/nuevo}" class="btn btn-primary">+ Nuevo Juego</a>
         </div>
 
+        <div style="margin-bottom: 30px;">
+            <form action="/juegos" method="get" style="display: flex; gap:10px;">
+                <input type="text" name="buscar" th:value="${busquedaActual}"
+                placeholder="Buscar tu juego por titulo o categoria" style="flex: 1; padding: 10px;
+                border-radius: 5px; border: 1px solid var(--border-color); background: var(--bg-panel); color: var(--body-text-color);">
+                <button type="submit" class="btn btn-secondary">Buscar</button>
+                <a th:if="${busquedaActual != null}" href="/juegos" class="btn btn-secondary"
+                   style="background: var(--bg-panel)">Limpiar</a>
+            </form>
+        </div>
+
         <div class="grid">
 
             <div th:each="juego: ${juegos}" class="panel" style="padding: 0; overflow: hidden;">
@@ -16,7 +27,24 @@
 
                 <div style="padding: 20px;">
                     <h3 th:text="${juego.titulo}" style="margin-top: 0; margin-bottom: 10px;">Título del Juego</h3>
-                    <p th:text="${juego.descripcion}" style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5; margin: 0;">Descripción breve del juego.</p>
+                    <span th:text="${juego.precio != null ? '$' + juego.precio : 'Gratis'}" style="font-weight: bold; color:var(--primary);">Precio</span>
+                </div>
+
+                <span th:text="${juego.categoria}" style="display: inline-block;
+                background: rgba(0, 255, 136, 0.1); color: var(--primary); padding: 2px 8px;
+                border-radius: 4px; font-size: 0.8rem; margin-bottom: 10px; width: fit-content;">Categoria</span>
+
+                <p th:text="${juego.descripcion}" style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5; margin: 0;">Descripción breve del juego.</p>
+
+                <button class="btn btn-primary" style="width: 100px; text-align: center;" onclick="alert('Gracias por' +
+                 'tu interes pero esta función aun no esta implementada')">Adquirir juego</button>
+
+                <div style="display:flex; gap: 10px; margin: auto;">
+                    <a th:href="@{/juegos/editar/{id}(id=${juego.id})}">Editar juego</a>
+                    <form th:action="@{/juegos/eliminar/{id}(id=${juego.id}})}" method="post" onsubmit="return confirm('¿Estás seguro de que deseas eliminar el juego?')">
+
+                        <button type="submit">Eliminar</button>
+                    </form>
                 </div>
             </div>
 

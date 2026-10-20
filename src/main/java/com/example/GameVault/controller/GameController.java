@@ -24,6 +24,11 @@ public class GameController {
     @Autowired
     JuegoService juegoService;
 
+    @GetMapping("/")
+    public String inicio(){
+        return "base";
+    }
+
     @GetMapping("/fragments-demo")
     public String fragments(){
         return "fragments-demo";

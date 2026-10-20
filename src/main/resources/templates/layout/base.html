@@ -9,9 +9,19 @@
     <nav>
         <a th:href="@{/juegos}" class="nav-brand">🎮 GameVault</a>
         <div class="nav-links">
-            <a th:href="@{/juegos}">Catálogo</a>
-            <a th:href="@{/juegos/nuevo}">Subir Juego</a>
-            <a th:href="@{/fragments-demo}" style="color: var(--success); margin-left:20px;">[Teoría]</a>
+            <th:block th:if="${session.usuario_id == null}">
+                <a href="/login" style="margin-left:20px;">Iniciar Sesión</a>
+                <a href="/registro">Registrarse</a>
+            </th:block>
+
+            <th:block th:if="${session.usuario_id != null}">
+                <a href="/mis-juegos" style="color: var(--primary); margin-left:20px;">Mis Videojuegos</a>
+                <a href="/juegos/nuevo">Subir Juego</a>
+                <a href="/logout" style="color: var(--danger); margin-left:20px;">Cerrar Sesión</a>
+            </th:block>
+<!--            <a th:href="@{/juegos}">Catálogo</a>-->
+<!--            <a th:href="@{/juegos/nuevo}">Subir Juego</a>-->
+<!--            <a th:href="@{/fragments-demo}" style="color: var(&#45;&#45;success); margin-left:20px;">[Teoría]</a>-->
         </div>
     </nav>
 
